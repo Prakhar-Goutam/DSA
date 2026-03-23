@@ -1,17 +1,29 @@
-#include<algorithm>
 class Solution {
 public:
-    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {  
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int idx = m+n-1;
+        int i = m-1;
+        int j = n-1;
 
-        for (int i=0; i<n ;i++){
-            nums1[m+i] = nums2[i];
+        while (i>=0 && j>=0) {
+
+            if (nums1[i]>=nums2[j]){
+                nums1[idx] = nums1[i];
+                i--;
+                idx--;   
+            }
+            else {
+                nums1[idx]=nums2[j];
+                j--;
+                idx--;
+            }
         }
 
-        sort (nums1.begin(), nums1.end());
-
-        for (int i =0 ; i <m+n; i++) {
-            cout << nums1[i] << ",";
-        } 
-
+        while (j>=0){
+            nums1[idx] = nums2[j];
+            idx--;
+            j--;
+        }
+       
     }
 };
