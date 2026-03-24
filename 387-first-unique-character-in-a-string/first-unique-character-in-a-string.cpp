@@ -2,22 +2,17 @@ class Solution {
 public:
     int firstUniqChar(string s) {
 
-       int n = s.size();
+        int count[26] = {0};
 
-        for (int i = 0 ; i <n ; i++) {
-            bool unique = true;
+        for (int i = 0; i <s.size() ; i++) {
+            count[s[i]-'a']++;
+        }
 
-            for (int j = 0; j < n; j++) {
-                if (s[i] == s[j] && i!=j){
-                    unique = false;
-                    break;
-                }  
-            }  
-            if (unique == true){
+        for (int i = 0 ; i < s.size() ; i++) {
+            if (count[s[i]-'a'] == 1){
                 return i;
             }
         }
-
-      return -1;
+       return -1; 
     }
 };
