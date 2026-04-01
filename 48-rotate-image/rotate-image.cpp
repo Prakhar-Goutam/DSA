@@ -15,7 +15,7 @@ public:
             int st = 0;
             int ed = n-1;
 
-            while (st<=ed) {
+            while (st<ed) {
                 swap (matrix[i][st],matrix[i][ed]);
                 st++;
                 ed--;
