@@ -3,7 +3,6 @@ public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
 
         vector<int> nums;
-        vector<int> ans;
         int n = grid.size();
         
         int duplicate = -1;
@@ -24,7 +23,6 @@ public:
                 if (nums[idx] < 0) {
 
                     duplicate = abs (nums[i]);
-                    ans.push_back(duplicate);
 
                 }
 
@@ -39,15 +37,11 @@ public:
                 if (nums[i] > 0) {
 
                     missing = i+1;
-                    ans.push_back(missing);
                     break;
                 }
             }
 
-
-
-
-       return ans; 
+            return {duplicate, missing}; 
         
     }
 };
