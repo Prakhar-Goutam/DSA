@@ -5,31 +5,39 @@ public:
         int n = nums.size();
         int Smallestd = INT_MAX;
         int closestSum = nums[0] + nums[1] + nums[2];
+        sort(nums.begin(), nums.end());
 
-        for (int i = 0; i< n-2; i++) {
+        for(int i = 0; i<n-2 ; i++) {
 
-            for (int j = i+1 ; j< n-1; j++) {
 
-                for (int k = j+1; k<n ; k++) {
+            int j = i+1;
+            int k = n-1;
 
-                    int sum = nums[i] + nums[j] + nums[k];
+            while (j<k) {
 
-                    int diff = abs(target -  sum);
+                int sum = nums[i]+nums[j] + nums[k];
 
-                    if (sum == target) return target;
+                if (sum == target) return sum;
 
-                    if (diff < Smallestd) {
+                 int diff = abs(sum - target);
+
+                    if (diff< Smallestd) {
                         Smallestd = diff;
                         closestSum = sum;
                     }
-                    
-                } 
+
+                if (sum < target) {
+                    j++;
+                }
+
+                else {
+                    k--;
+                }
+
             }
         }
 
         return closestSum;
-
-        
         
     }
 };
