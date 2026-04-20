@@ -6,14 +6,14 @@ public:
         int st = 0;
         int ed = n-1;
 
-        while (st<ed && nums[st]==nums[ed]) {
+        while (st<ed && nums[ed]==nums[0]) {
             ed--;
         }
 
         int ans1 = ed - st;
         ed=n-1;
 
-        while (st<ed && nums[st]==nums[ed]) {
+        while (st<ed && nums[st]==nums[n-1]) {
             st++;
         }
 
