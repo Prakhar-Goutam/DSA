@@ -1,21 +1,38 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
 
-        map <int,int> mpp;
-        mpp[0] = 1;
-        int preSum = 0;
+    int func (vector<int> & nums, int goal) {
+        
+        int n = nums.size();
+        int l = 0;
+        int r = 0;
+        int sum = 0;
         int count = 0;
 
-        for (int i =0 ; i <nums.size(); i++) {
+        while (r<n) {
 
-            preSum = preSum + nums[i];
-            int remove = preSum - goal;
-            count = count + mpp[remove];
-            mpp[preSum]++;
+            sum += nums[r];
+
+            while (sum > goal && l<=r) {    ///// (l<=r) likhne ki jarurat nahi hai. 
+                sum -= nums[l];
+                l++;
+            }
+
+              // if (sum<=goal) {  ///// if not needed anymore kyoki while wali condition window shrink kr krke, sum ko less than equal to k le hi aayega.
+                count += r-l+1;
+           ///// }
+
+            r++;
+
         }
 
         return count;
+    }
+
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+
+        if (goal < 0) return 0;
+        return func(nums,goal) - func (nums, goal-1);
         
     }
 };
