@@ -1,21 +1,27 @@
 class Solution {
 public:
     int maxDistance(vector<int>& nums) {
+
         int n = nums.size();
-        int Maxl = 0;
+        int st = 0;
+        int ed = n-1;
 
-        for (int i = 0; i<n ; i++) {
-
-            for (int j = i+1 ; j<n ; j++) {
-
-                if(nums[i] != nums[j]) {
-                    Maxl = max(Maxl , j-i);
-                }
-
-            }
+        while (st<ed && nums[st]==nums[ed]) {
+            ed--;
         }
 
-        return Maxl;
+        int ans1 = ed - st;
+        ed=n-1;
+
+        while (st<ed && nums[st]==nums[ed]) {
+            st++;
+        }
+
+        int ans2 = ed - st;
+
+        int Max = max(ans1,ans2);
+
+        return Max;
         
     }
 };
