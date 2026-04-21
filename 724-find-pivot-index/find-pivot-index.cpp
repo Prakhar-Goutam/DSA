@@ -6,26 +6,18 @@ public:
         int tsum = 0;
 
         for (int i = 0; i<n ; i++) {
-            tsum+= nums[i];
+            tsum += nums[i];
         }
 
         int lsum = 0;
-        int rsum = 0;
 
-        for (int i = 0; i<n; i++) {
+        for (int i = 0; i<n ; i++) {
 
+            int rsum = tsum-lsum-nums[i];
 
+            if(lsum==rsum) return i;
 
-            if (i==0) {
-                int rsum1 = tsum - nums[i];
-                if (rsum1==lsum) return i;
-            }
-
-            else {
-                lsum += nums[i-1];
-                rsum = tsum-lsum-nums[i];
-                if (rsum==lsum) return i;
-            }
+            lsum+= nums[i];
         }
 
         return -1;
