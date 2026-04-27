@@ -1,29 +1,33 @@
 class Solution {
 public:
-        
     vector<int> topKFrequent(vector<int>& nums, int k) {
 
-        unordered_map<int,int> mpp;
         int n = nums.size();
+        unordered_map<int , int> mpp;
 
-        for (int i = 0; i<n ; i++) {
-            mpp[nums[i]]++;
+        for (int i = 0; i<n; i++) {
+            mpp[nums[i]] ++;
         }
 
-        auto lambda = [&] (pair<int,int> &p1, pair<int,int>p2) {
-            return p1.second> p2.second;
-        };
+        vector<vector<int>> bucket(n+1);
 
-        vector<pair<int,int>> vec(mpp.begin(), mpp.end());
-        sort(vec.begin() , vec.end() , lambda);
+        for(auto &p :mpp) {
+            bucket[p.second].push_back(p.first);
+        }
 
+         // step 3: collect answer
         vector<int> ans;
 
-        for (int i = 0; i<k ; i++) {
+        for (int i = n; i >= 1; i--) {
 
-            ans.push_back(vec[i].first);
+            for (int num : bucket[i]) {
+                ans.push_back(num);
+
+                if (ans.size() == k) {
+                    return ans;
+                }
+            }
         }
-
         return ans;
         
     }
