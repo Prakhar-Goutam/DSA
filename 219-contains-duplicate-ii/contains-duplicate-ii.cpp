@@ -2,21 +2,30 @@ class Solution {
 public:
     bool containsNearbyDuplicate(vector<int>& nums, int k) {
 
-        unordered_map<int,int> mpp;
+        int n = nums.size();
+        set<int>st;
 
-        for (int i = 0; i<nums.size() ; i++) {
+        int i = 0;
+        int j = 0;
 
-            if(mpp.find(nums[i]) != mpp.end()) { ///// mtlab map mai exist krta hai
+        while(j<n) {
 
-                if(abs(i-mpp[nums[i]]) <= k) {
-                    return true;
-                }
-                else{
-                    mpp[nums[i]] = i;
-                }
+            // step 1
+            while (abs(j-i) > k) {   //// abs(j-i) <=k na hp
+                
+                st.erase(nums[i]);
+                i++; ///// shrink
             }
 
-            mpp[nums[i]] = i;
+            //// past mai dekha hai nums[j] ko
+            if (st.find(nums[j]) != st.end()) {
+                return true;
+            }
+
+            st.insert(nums[j]);
+            j++;
+
+
         }
 
         return false;
