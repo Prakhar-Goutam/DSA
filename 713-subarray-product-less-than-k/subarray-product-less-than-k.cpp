@@ -3,30 +3,26 @@ public:
     int numSubarrayProductLessThanK(vector<int>& nums, int k) {
 
         int n = nums.size();
-        int count = 0;
-        
+        int maxCount =  0;
+        int l = 0;
+        long long prod = 1;
 
-        for (int i = 0; i<n ; i++) {
+        if (k<=1)return 0;
 
-            int prod = 1;
+        for (int r = 0; r<n ; r++) {   ///// first shrink then count
 
-            for (int j = i; j<n ; j++) {
+            prod *= nums[r];
 
-                prod *= nums[j];
-
-                if (prod < k) {
-                    count++;
-                }
-
-                else {
-                    break;
-                }
-
-                
+            while (prod >= k) {
+                prod = prod / nums[l];
+                l++;
             }
-        }
 
-        return count;
+            maxCount += r-l+1;
+
+
+        }
+        return maxCount;
         
     }
 };
