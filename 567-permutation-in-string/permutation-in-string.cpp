@@ -1,45 +1,36 @@
 class Solution {
 public:
-
-    bool isFreqSame(vector<int>&freq1 , vector<int>&freq2) {
-
-        for(int i =0; i< 26; i++) {
-            if (freq1[i] != freq2[i]) return false;
-        }
-
-        return true;
-    }
-    
     bool checkInclusion(string s1, string s2) {
 
         int m = s1.size();
         int n = s2.size();
 
-        if (m>n) return false;
+        if (m>n)return false;
 
-        vector<int> freq(26,0);
+        vector<int>freq1 (26,0);
+        vector<int>freq2 (26,0);
 
-        for (int i = 0; i<m; i++) {
-            freq[s1[i]-'a']++;
+        for (int i =0; i<m; i++) {
+            freq1[s1[i]-'a']++;  
         }
 
-        int windSize = m;
+        int r = 0;
+        int l = 0;
 
-        for (int i = 0; i<n; i++) {
+        while(r<n) {
 
-            int windIdx=0; 
-            int idx = i;
-            vector<int> windFreq(26,0);
+            freq2[s2[r]-'a']++;
 
-            while(windIdx < windSize && idx<n) {
-                windFreq[s2[idx]- 'a']++;
-                idx++;
-                windIdx++;
+            while(r-l+1>m) {
+                freq2[s2[l]-'a']--;
+                l++;
             }
 
-            if (isFreqSame (freq, windFreq)) {
+            if (freq1 == freq2) {
                 return true;
             }
+
+            r++;
         }
 
         return false;
