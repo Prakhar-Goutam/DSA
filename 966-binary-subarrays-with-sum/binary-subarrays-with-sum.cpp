@@ -1,27 +1,31 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
 
-        unordered_map<int , int> mpp;
-        mpp[0] = 1;
-        int n = nums.size();
+    int sumLessThanEqual(vector<int> & arr, int k) {
+
+        if (k<0) return 0;
+
+        int n = arr.size();
+        int l = 0;
         int sum = 0;
         int count = 0;
 
-        for (int i = 0; i<n; i++) {
+        for (int r = 0; r<n; r++) {
+            sum += arr[r];
 
-            sum += nums[i];
-            int prev = sum - goal;
-
-            if (mpp.find (prev) != mpp.end()) {
-                count += mpp[prev];
+            while (sum > k) {
+                sum -= arr[l];
+                l++;
             }
 
-            mpp[sum]++;
-
+            count += r-l+1;
         }
 
         return count;
+    }
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+
+        return sumLessThanEqual(nums,goal) - sumLessThanEqual(nums , goal-1);
         
     }
 };
