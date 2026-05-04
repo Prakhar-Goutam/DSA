@@ -5,26 +5,28 @@ public:
         int n = nums.size();
         int lsum = 0;
 
-        for (int i = 0; i<k ; i++)  {
+        for (int i = 0; i<k ; i++) {
             lsum += nums[i];
         }
 
-        int i = k-1;
-        int j = n-1;
-
         int rsum = 0;
-        int Maxs = lsum + rsum;
+        int maxSum = lsum;
+        int l = k-1;
+        int r = n-1;
 
-        while (i>=0) {
+        while (l>=0) {
 
-            lsum = lsum - nums[i];
-            rsum = rsum + nums[j];
-            Maxs = max(Maxs , lsum+rsum);
-            i--;
-            j--;
+            lsum = lsum - nums[l];
+            rsum = rsum + nums[r];
+            
+            maxSum = max (lsum + rsum , maxSum);
+            l--;
+            r--;
         }
 
-        return Maxs;
+        return maxSum;
+        
+
         
     }
 };
