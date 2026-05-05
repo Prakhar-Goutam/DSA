@@ -1,29 +1,19 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-        
-        int n = s.length();
+
+        int n = s.size();
+        vector<int> freq(3,-1);    //// INITIALISING WITH -1 IS VERY IMP
         int count = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int r=0; r<n; r++) {
 
-            vector<int> freq(3, 0);
-            int unique = 0;
+            freq[s[r]-'a'] = r;
 
-            for (int j = i; j < n; j++) {
-
-                int idx = s[j] - 'a';
-
-                if (freq[idx] == 0) unique++;
-                freq[idx]++;
-
-                if (unique == 3) {
-                    count += (n - j);  // 🔥 optimization
-                    break;
-                }
+            if (freq[0] != -1 && freq[1] != -1 && freq[2] != -1) {
+                count = count + (1 + min(freq[0], min(freq[1], freq[2])));
             }
         }
-
-        return count;
+        return count;    
     }
 };
