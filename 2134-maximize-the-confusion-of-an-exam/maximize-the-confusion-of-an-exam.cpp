@@ -1,35 +1,69 @@
 class Solution {
 public:
-    int maxConsecutiveAnswers(string s, int k) {
+
+    int countT (string &s , int k) {
 
         int n = s.size();
-        int tCount = 0;
-        int fCount = 0;
         int l = 0;
-        int r = 0;
-        int maxFreq = 0;
+        int count = 0;
         int maxL = 0;
 
-        while (r<n) {
-            if (s[r] == 'T') tCount++;
-            else {
-                fCount++;
+        for (int r = 0; r< n; r++) {
+
+            if (s[r]=='F') {
+                count++;
             }
 
-            maxFreq = max(maxFreq, max(tCount, fCount));
-
-            while( (r-l+1) - maxFreq > k) {
-                
-                if (s[l] == 'T') tCount--;
-                else fCount--;
+            while (count>k) {
+                if (s[l]=='F') {
+                    count--;
+                }
                 l++;
             }
 
-            maxL = max (maxL , r-l+1);
-            r++;
+            maxL = max(maxL , r-l+1);
         }
 
         return maxL;
-        
+    }
+
+    int countF (string &s, int k) {
+
+        int n = s.size();
+        int l = 0;
+        int count = 0;
+        int maxL = 0;
+
+        for (int r = 0; r< n; r++) {
+
+            if (s[r]=='T') {
+                count++;
+            }
+
+            while (count>k) {
+                if (s[l]=='T') {
+                    count--;
+                }
+                l++;
+            }
+
+            maxL = max(maxL , r-l+1);
+        }
+
+        return maxL;
+
+    }
+
+
+    int maxConsecutiveAnswers(string s, int k) {
+
+        int T = countT(s,k);
+        int F = countF(s,k);
+
+        if (T>F) return T;
+        else{
+            return F;
+        }
+
     }
 };
