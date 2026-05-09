@@ -2,25 +2,34 @@ class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
 
-        int n = strs.size();
-
         unordered_map<string , vector<string>> mpp;
 
-        for (int i = 0; i<n; i++) {
+        for (int i = 0; i<strs.size(); i++) {
+            string s = strs[i];
 
-            string temp = strs[i];
+            vector <int> freq(26,0);
 
-            sort(temp.begin() , temp.end());
+            for (int j = 0; j < s.size(); j++) {
+                freq[s[j] - 'a']++;
+            }
 
-            mpp[temp].push_back(strs[i]);
+            string key = "";
+
+            for (int j = 0; j<26 ; j++) {
+                key += "#";
+                key += to_string(freq[j]);
+            }
+
+            mpp[key].push_back(s);   
         }
 
         vector<vector<string>> ans;
 
-          for (auto &it : mpp) {
+        for (auto &it :mpp) {
             ans.push_back(it.second);
         }
 
         return ans;
+        
     }
 };
