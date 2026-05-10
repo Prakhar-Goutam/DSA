@@ -7,26 +7,41 @@ public:
         int m = s.size();
         int n = p.size();
 
+        if (n > m) return ans;
+
+        vector<int> freqS(26,0);
         vector<int> freqP(26,0);
 
+        for (int i = 0; i<n ; i++) {
+            freqP[p[i]-'a']++;
+        }   
+
+        //// TAKE FREQ OF 1ST WINDOW IN S ////
         for (int i = 0; i<n; i++) {
-            freqP[p[i] - 'a']++;
+            freqS[s[i]-'a']++;
+        }    
+
+        //// CHECK /////
+        if (freqP == freqS) {
+            ans.push_back(0);
         } 
 
-        for (int i = 0; i<=m-n ; i++) {
+        //// CHECK COMPLETE STRING ////
+        for (int i = n ; i<m; i++) {
 
-            vector<int> freqS(26,0);
+            //// add character ////
+            freqS[s[i]-'a']++;
 
-            for (int j = i; j<i+n ; j++) {
-                freqS[s[j]-'a']++;    
+            //// remove ch ////
+            freqS[s[i-n] - 'a'] --;
+
+            if (freqS== freqP) {
+                ans.push_back(i-n+1);
             }
-
-             if (freqP == freqS) {
-                    ans.push_back(i);
-            }
-
         }
+
         return ans;
-        
+
+       
     }
 };
