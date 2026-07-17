@@ -1,25 +1,41 @@
 class Solution {
 public:
+
+    typedef pair<int,int> p;
     long long continuousSubarrays(vector<int>& nums) {
 
-        multiset<int> ms;
-
-        int l = 0;
+        int n = nums.size();
         long long ans = 0;
 
-        for (int r = 0; r < nums.size(); r++) {
+        priority_queue<p,vector<p>> maxPq;
+        priority_queue<p,vector<p> , greater<p>> minPq;
 
-            ms.insert(nums[r]);
+        int j = 0;
+        int i = 0;
 
-            while (*ms.rbegin() - *ms.begin() > 2) {
+        while (j<n) {
 
-                ms.erase(ms.find(nums[l]));
-                l++;
+            maxPq.push({nums[j],j});
+            minPq.push({nums[j],j});
+
+            while (maxPq.top().first- minPq.top().first > 2) {
+
+                i = min (maxPq.top().second, minPq.top().second) + 1;
+
+                while (maxPq.top().second<i) {
+                    maxPq.pop();
+                }
+
+                while (minPq.top().second<i) {
+                    minPq.pop();
+                }
             }
 
-            ans += (r - l + 1);
+            ans += j-i+1;
+            j++;
         }
 
         return ans;
+        
     }
 };
