@@ -2,42 +2,43 @@ class Solution {
 public:
     int myAtoi(string s) {
 
-        int n = s.size();
+        if (s.size()==0) {
+            return 0;
+        }
+
         int i = 0;
 
-        // Skip spaces
-        while (i < n && s[i] == ' ')
-            i++;
-
-        // Sign
-        int sign = 1;
-
-        if (i < n && (s[i] == '+' || s[i] == '-')) {
-
-            if (s[i] == '-')
-                sign = -1;
-
+        while (i<s.size() && s[i]==' ') {
             i++;
         }
 
+        s = s.substr(i);
+
+        int sign = 1;
         long long ans = 0;
+        int MIN = INT_MIN;
+        int MAX = INT_MAX;
 
-        while (i < n && isdigit(s[i])) {
+        if (s[0]=='-') {
+            sign = -1;
+        }
 
-            int digit = s[i] - '0';
+        i = (s[0]=='+' || s[0]=='-') ? 1 : 0;
 
-            // Overflow check
-            if (ans > INT_MAX / 10 ||
-                (ans == INT_MAX / 10 &&
-                 digit > (sign == 1 ? 7 : 8))) {
+        while (i<s.size()) {
 
-                return (sign == 1) ? INT_MAX : INT_MIN;
+            if (s[i]==' ' || !isdigit(s[i])) {
+                break;
             }
 
-            ans = ans * 10 + digit;
+            ans = ans * 10 + s[i] - '0';
+
+            if (sign == -1 && -1*ans <MIN) return MIN;
+            if (sign ==  1 &&  1*ans >MAX) return MAX;
             i++;
         }
 
-        return sign * ans;
+        return (int)(sign*ans);
+        
     }
 };
