@@ -1,49 +1,69 @@
-#include <vector>
-#include <algorithm>
-#include <climits>
-
 class Solution {
 public:
-    int minDays(std::vector<int>& bloomDay, int m, int k) {
-        long long total_flowers = (long long)m * k;
-        if (total_flowers > bloomDay.size()) return -1; // Not enough flowers
 
-        int low = INT_MAX, high = INT_MIN;
-        for (int day : bloomDay) {
-            low = std::min(low, day);
-            high = std::max(high, day);
-        }
+    bool isPossible (vector<int> & nums, int m, int k, int mid) {
 
-        int ans = -1;
+        int n = nums.size();
+        int count = 0;
+        int x = 0;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (canMakeBouquets(bloomDay, m, k, mid)) {
-                ans = mid;         // Possible, try to find a smaller day
-                high = mid - 1;
-            } else {
-                low = mid + 1;     // Not enough time, need more days
+        for (int i = 0; i<n; i++) {
+
+            if (nums[i] <= mid) {
+                count++;
+            }
+
+            else {
+                x += count/k;
+                count = 0;
+
             }
         }
-        return ans;
+
+        x+= count/k;
+
+        if (x>=m) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
+    long long minDays(vector<int>& bloomDay, int m, int k) {
 
-private:
-    bool canMakeBouquets(const std::vector<int>& bloomDay, int m, int k, int day) {
-        int bouquets = 0;
-        int consecutive_flowers = 0;
+        int n = bloomDay.size();
 
-        for (int b : bloomDay) {
-            if (b <= day) {
-                consecutive_flowers++;
-                if (consecutive_flowers == k) {
-                    bouquets++;
-                    consecutive_flowers = 0; // Reset for next bouquet
-                }
-            } else {
-                consecutive_flowers = 0; // Chain is broken
-            }
+        if ((long long)m*k > n) {
+            return -1;
         }
-        return bouquets >= m;
+
+        int minE = INT_MAX;
+        int maxE = INT_MIN;
+
+        for (int i = 0; i<n; i++) {
+            minE = min (minE, bloomDay[i]);
+            maxE = max (maxE , bloomDay[i]);
+        }
+
+        int st = minE;
+        int ed = maxE;
+
+        while (st<=ed) {
+
+            int mid = st + (ed-st) / 2;
+
+            if (isPossible(bloomDay, m , k, mid)) {
+                ed = mid-1;
+            }
+
+            else {
+                st = mid+1;
+            }
+
+            
+        }
+
+        return st;
+        
     }
 };
