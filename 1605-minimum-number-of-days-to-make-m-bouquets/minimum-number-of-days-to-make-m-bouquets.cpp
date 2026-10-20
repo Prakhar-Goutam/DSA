@@ -1,37 +1,9 @@
 class Solution {
 public:
-
-    bool isPossible (vector<int> & nums, int m, int k, int mid) {
-
+    int minDays(vector<int>& nums, int m, int k) {
+        
         int n = nums.size();
-        int count = 0;
-        int x = 0;
-
-        for (int i = 0; i<n; i++) {
-
-            if (nums[i] <= mid) {
-                count++;
-            }
-
-            else {
-                x += count/k;
-                count = 0;
-
-            }
-        }
-
-        x+= count/k;
-
-        if (x>=m) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    long long minDays(vector<int>& bloomDay, int m, int k) {
-
-        int n = bloomDay.size();
+        int ans = -1;
 
         if ((long long)m*k > n) {
             return -1;
@@ -41,8 +13,8 @@ public:
         int maxE = INT_MIN;
 
         for (int i = 0; i<n; i++) {
-            minE = min (minE, bloomDay[i]);
-            maxE = max (maxE , bloomDay[i]);
+            minE = min (minE,nums[i]);
+            maxE = max (maxE,nums[i]);
         }
 
         int st = minE;
@@ -52,18 +24,35 @@ public:
 
             int mid = st + (ed-st) / 2;
 
-            if (isPossible(bloomDay, m , k, mid)) {
-                ed = mid-1;
+            int count = 0;
+            int x = k;
+
+            for (int i = 0; i<n; i++) {
+
+                if (nums[i] <= mid) {
+                    x--;
+                }
+
+                else {
+                    x=k;
+                }
+
+                if (x==0) {
+                    count++;
+                    x = k;
+                }
+            }
+
+            if (count >= m) {
+                ed = mid -1;
+                ans = mid;
             }
 
             else {
                 st = mid+1;
             }
-
-            
         }
 
-        return st;
-        
+        return ans;
     }
 };
