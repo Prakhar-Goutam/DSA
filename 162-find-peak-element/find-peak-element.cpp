@@ -4,9 +4,11 @@ public:
 
         int n = nums.size();
 
-        if (n==1) return 0;
+        if (n==1) {
+            return 0;
+        }
 
-        if (nums[0]> nums[1]) {
+        if (nums[0] > nums[1]) {
             return 0;
         }
 
@@ -15,25 +17,27 @@ public:
         }
 
         int st = 1;
-        int ed = n-2;
+        int ed = n-1;
 
         while (st <= ed) {
 
-            int mid = st + (ed-st)/2;
+            int mid = st + (ed - st)/2;
 
             if (nums[mid] > nums[mid-1] && nums[mid] > nums[mid+1]) {
                 return mid;
             }
 
-            else if (nums[mid-1] < nums[mid]) {
-                st = mid+1;
-            } 
+            if (nums[mid+1] > nums[mid]) {
+                st = mid + 1;
+            }
 
-            else  {
-                ed = mid-1;
+            else {
+                ed = mid - 1;
             }
         }
- 
-        return -1;  
+
+        return -1;
+
+        
     }
 };
