@@ -3,33 +3,36 @@ public:
     int findMin(vector<int>& nums) {
 
         int n = nums.size();
-
         int st = 0;
         int ed = n-1;
-
-        int minE = INT_MAX;
+        int smallest = INT_MAX; 
 
         while (st<=ed) {
 
-            int mid = st + (ed - st) / 2;
+            int mid = st + (ed-st)/2;
 
-            if (nums[st] <= nums[mid]) {    ////// LEFT SORTED
+            //// left sorted
 
-            minE = min (minE , nums[st]);
-            st = mid+1;
+            if (nums[st] <= nums[mid]) {
 
+                if (nums[st] < smallest) {
+                    smallest = nums[st];
+                }
+                st = mid+1;
             }
 
-            else {  ///// right sorted hoga
+            //// right sorted 
 
-            minE = min (minE , nums[mid]);
-            ed = mid-1;
+            else {
+
+                if (nums[mid] < smallest) {
+                    smallest = nums[mid];
+                }
+                ed = mid-1;
             }
         }
 
-        return minE;
-
-        
+        return smallest;
         
     }
 };
