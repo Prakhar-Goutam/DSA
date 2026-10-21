@@ -4,9 +4,6 @@ public:
 
         int n = arr.size();
 
-        if (k< arr[0]) {
-            return k;
-        }
 
         for (int i=0; i<n; i++) {
 
